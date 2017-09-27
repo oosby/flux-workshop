@@ -7,24 +7,24 @@ This workshop covers the flux pattern basics. We will build a small application 
 
 We will not use any libraries or frameworks, nor does the code need to be transpiled as long as you are running it in latest (or thereabouts) Chrome.
 
-####Step 1
+#### Step 1
 Initial setup consisting index.html and main.js. No flux yet, just a simple fetch call to the API
-####Step 2
+#### Step 2
 
 Build a basic dispatcher and store
-####Step 3
+#### Step 3
 
 Process actions in the store and update state
-####Step 4
+#### Step 4
 
 Cleanup! Move actions and reducers into their own “areas”
-####Step 5
+#### Step 5
 
 Connect to the store in the app’s init function
-####Step 6
+#### Step 6
 
 Replace the app’s init function with a component that renders posts to the DOM
-####Step 7
+#### Step 7
 
 Add “remove post” functionality by updating the component, creating an action, and adding a reducer
 
@@ -42,12 +42,12 @@ When we’re done our application state will look like:
 }
 ```
 
-##Run locally
+## Run locally
 - clone/download repo and cd into the directory
 - `python -m SimpleHTTPServer`
 - open browser and navigate to `http://localhost:8000`
 
-##Links
+## Links
 - placeholder json https://jsonplaceholder.typicode.com/
 - Lin Clark's awesome cartoon https://code-cartoons.com/a-cartoon-guide-to-flux-6157355ab207
 - Facebook flux docs https://facebook.github.io/flux/docs/in-depth-overview.html
