@@ -20,7 +20,7 @@
 
     register(callback) {
       const callbacks = Object.keys(this._callbacks);
-      const token = `DISPATCHER_${callbacks.length + 1}`; // DISPATCHER_1
+      const token = `DISPATCHER_${callbacks.length + 1}`;
       this._callbacks[token] = callback;
     }
   }
@@ -37,10 +37,32 @@
       // bind methods
       this.handleDispatch = this.handleDispatch.bind(this);
       dispatcher.register(this.handleDispatch);
+
+      // setup instance props
+      this.state = {};
     }
 
     handleDispatch(action) {
-      console.log(`%c${action.type} new state:`, 'color:aqua', action);
+      const newState = Object.assign({}, this.state);
+
+      // update state object based on actions
+      switch (action.type) {
+        case 'FETCH_POSTS_REQUEST':
+          newState.fetchingPosts = true;
+          break;
+
+        case 'FETCH_POSTS_SUCCESS':
+          newState.fetchingPosts = false;
+          newState.posts = action.posts;
+          break;
+
+        default:
+          break;
+      }
+      
+      console.log(`%c${action.type} old state:`, 'color:gold', this.state);
+      console.log(`%c${action.type} new state:`, 'color:aqua', newState);
+      this.state = newState;
     }
   }
 
@@ -50,7 +72,8 @@
   /**
    * Init App
   */
-  // debugger;
+
+    // debugger;
     dispatcher.dispatch({
       type: 'FETCH_POSTS_REQUEST'
     });

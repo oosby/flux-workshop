@@ -1,7 +1,7 @@
 # Flux Workshop
 
-## Step 2
-add basic dispatcher and store
+## Step 3
+update state in the store based on actions
 
 ## Run locally
 - clone/download repo and cd into the directory
