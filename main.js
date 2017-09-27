@@ -28,6 +28,65 @@
   const dispatcher = new Dispatcher();
 
 
+  /**
+   * Actions
+  */
+  const actions = {
+    getPosts() {
+      // debugger;
+      dispatcher.dispatch({
+        type: 'FETCH_POSTS_REQUEST'
+      });
+
+      fetch('https://jsonplaceholder.typicode.com/posts')
+      .then(function(resp, err) {
+        if (err) {
+          throw new Error(err);
+        }
+        return resp.json();
+      })
+      .then(function(json) {
+        // debugger;
+        dispatcher.dispatch({
+          type: 'FETCH_POSTS_SUCCESS',
+          data: json,
+        });
+      })
+      .catch(function(e) {
+        dispatcher.dispatch({
+          type: 'FETCH_POSTS_FAILURE',
+          err: e,
+        });
+      });
+    }
+  };
+
+  /**
+   * Reducers
+  */
+  const reducers = function(state, action) {
+    const newState = Object.assign({}, state);
+
+    switch (action.type) {
+      case 'FETCH_POSTS_REQUEST':
+        newState.fetchingPosts = true;
+        return newState;
+
+      case 'FETCH_POSTS_SUCCESS':
+        newState.fetchingPosts = false;
+        newState.posts = action.data;
+        return newState;
+
+      case 'FETCH_POSTS_FAILURE':
+        newState.fetchingPosts = false;
+        newState.err = action.err;
+        return newState;
+
+      default:
+        return newState;
+    }
+  };
+
 
   /**
    * Store
@@ -43,25 +102,11 @@
     }
 
     handleDispatch(action) {
-      const newState = Object.assign({}, this.state);
-
-      // update state object based on actions
-      switch (action.type) {
-        case 'FETCH_POSTS_REQUEST':
-          newState.fetchingPosts = true;
-          break;
-
-        case 'FETCH_POSTS_SUCCESS':
-          newState.fetchingPosts = false;
-          newState.posts = action.posts;
-          break;
-
-        default:
-          break;
-      }
+      const newState = reducers(this.state, action);
       
       console.log(`%c${action.type} old state:`, 'color:gold', this.state);
       console.log(`%c${action.type} new state:`, 'color:aqua', newState);
+
       this.state = newState;
     }
   }
@@ -72,27 +117,5 @@
   /**
    * Init App
   */
-
-    // debugger;
-    dispatcher.dispatch({
-      type: 'FETCH_POSTS_REQUEST'
-    });
-
-    fetch('https://jsonplaceholder.typicode.com/posts')
-    .then(function(resp, err) {
-      if (err) {
-        throw new Error(err);
-      }
-      return resp.json();
-    })
-    .then(function(json) {
-      // debugger;
-      dispatcher.dispatch({
-        type: 'FETCH_POSTS_SUCCESS',
-        posts: json,
-      });
-    })
-    .catch(function(e) {
-      console.error(e)
-    });
+    actions.getPosts();
 }());

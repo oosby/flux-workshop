@@ -1,7 +1,7 @@
 # Flux Workshop
 
-## Step 3
-update state in the store based on actions
+## Step 4
+move actions and reducers out of init function and store
 
 ## Run locally
 - clone/download repo and cd into the directory
