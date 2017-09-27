@@ -33,6 +33,7 @@
   */
   const actions = {
     getPosts() {
+      // debugger;
       dispatcher.dispatch({
         type: 'FETCH_POSTS_REQUEST'
       });
@@ -46,6 +47,7 @@
         return resp.json();
       })
       .then(function(json) {
+        // debugger;
         dispatcher.dispatch({
           type: 'FETCH_POSTS_SUCCESS',
           data: json,
@@ -56,6 +58,12 @@
           type: 'FETCH_POSTS_FAILURE',
           err: e,
         });
+      });
+    },
+    removePost(idx) {
+      dispatcher.dispatch({
+        type: 'REMOVE_POST',
+        idx,
       });
     }
   };
@@ -79,6 +87,12 @@
       case 'FETCH_POSTS_FAILURE':
         newState.fetchingPosts = false;
         newState.err = action.err;
+        return newState;
+
+      case 'REMOVE_POST':
+        const newPosts = newState.posts.concat();
+        newPosts.splice(action.idx, 1);
+        newState.posts = newPosts;
         return newState;
 
       default:
@@ -118,7 +132,7 @@
 
     subscribe(listener) {
       const listeners = Object.keys(this._listeners);
-      const token = `LISTENER_${listeners.length + 1}`;
+      const token = [`LISTENER_${listeners.length + 1}`];
       this._listeners[token] = listener;
     }
   }
@@ -132,19 +146,28 @@
     constructor() {
       // bind methods
       this.render = this.render.bind(this);
-
-      store.subscribe(this.render);
+      this.handleRemove = this.handleRemove.bind(this);
+      
       this.elem = document.getElementById('posts-component');
+      this.elem.addEventListener('click', this.handleRemove);
+      store.subscribe(this.render);
+      
+    }
+
+    handleRemove({ target }) {
+      const idx = target.closest('[data-idx]').getAttribute('data-idx');
+      actions.removePost(+idx);
     }
 
     renderPosts(posts) {
       const frag = document.createDocumentFragment();
-      posts.forEach(function(post) {
+      posts.forEach(function(post, idx) {
         const div = document.createElement('div');
         const header = document.createElement('h2');
         const body = document.createElement('p');
         header.innerText = post.title;
         body.innerText = post.body;
+        div.setAttribute('data-idx', idx);
         div.appendChild(header);
         div.appendChild(body);
         frag.appendChild(div);

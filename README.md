@@ -1,7 +1,7 @@
 # Flux Workshop
 
-## Step 6
-add a component
+## Step 7
+add action, reducer and ui support for removing a post on click
 
 ## Run locally
 - clone/download repo and cd into the directory
