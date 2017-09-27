@@ -1,7 +1,7 @@
 # Flux Workshop
 
-## Step 1
-No flux yet, just a simple async call to a third-party API
+## Step 2
+add basic dispatcher and store
 
 ## Run locally
 - clone/download repo and cd into the directory
