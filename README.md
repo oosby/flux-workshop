@@ -1,7 +1,7 @@
 # Flux Workshop
 
 ## Step 5
-wire up store to an outside function.
+wire up store to our "view".
 
 ## Run locally
 - clone/download repo and cd into the directory
