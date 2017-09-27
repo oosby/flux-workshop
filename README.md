@@ -20,16 +20,16 @@ Process actions in the store and update state
 Cleanup! Move actions and reducers into their own “areas”
 #### Step 5
 
-Connect to the store in the app’s init function
+Connect to the store the the view
 #### Step 6
 
-Replace the app’s init function with a component that renders posts to the DOM
+Build a view component that renders posts to the DOM
 #### Step 7
 
-Add “remove post” functionality by updating the component, creating an action, and adding a reducer
+Add "remove post" functionality by updating the component, creating an action, and adding a reducer
 
 
-When we’re done our application state will look like:
+When we're done our application state will look like:
 ```
 {
     fetchingPosts: false,
