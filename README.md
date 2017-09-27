@@ -1,7 +1,7 @@
 # Flux Workshop
 
 This workshop covers the flux pattern basics. We will build a small application that:
-- asynchronously fetches a list of 100 posts from a third-party API ()
+- asynchronously fetches a list of 100 posts from a third-party API (Placeholder Json)
 - renders them on the page
 - allows the user to remove them from the list
 
@@ -9,6 +9,7 @@ We will not use any libraries or frameworks, nor does the code need to be transp
 
 #### Step 1
 Initial setup consisting index.html and main.js. No flux yet, just a simple fetch call to the API
+
 #### Step 2
 
 Build a basic dispatcher and store
