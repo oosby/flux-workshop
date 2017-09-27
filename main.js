@@ -42,6 +42,7 @@
       .then(function(resp, err) {
         if (err) {
           throw new Error(err);
+          debugger;
         }
         return resp.json();
       })
@@ -95,20 +96,34 @@
     constructor() {
       // bind methods
       this.handleDispatch = this.handleDispatch.bind(this);
+      this.subscribe = this.subscribe.bind(this);
       dispatcher.register(this.handleDispatch);
 
       // setup instance props
-      this.state = {};
+      this._listeners = {};
+    }
+
+    getState() {
+      return this.state;
     }
 
     handleDispatch(action) {
       const newState = reducers(this.state, action);
-      
       console.log(`%c${action.type} old state:`, 'color:gold', this.state);
       console.log(`%c${action.type} new state:`, 'color:aqua', newState);
-
       this.state = newState;
+
+      for (let token in this._listeners) {
+        this._listeners[token]();
+      }
     }
+
+    subscribe(listener) {
+      const listeners = Object.keys(this._listeners);
+      const token = `LISTENER_${listeners.length + 1}`;
+      this._listeners[token] = listener;
+    }
+
   }
 
   const store = new Store();
@@ -117,5 +132,9 @@
   /**
    * Init App
   */
+    store.subscribe(function() {
+      const state = store.getState();
+      console.log('%ccomponent:', 'color:lime', state);
+    });
     actions.getPosts();
 }());

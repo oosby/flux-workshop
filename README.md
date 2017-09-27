@@ -1,7 +1,7 @@
 # Flux Workshop
 
-## Step 4
-move actions and reducers out of init function and store
+## Step 5
+wire up store to an outside function.
 
 ## Run locally
 - clone/download repo and cd into the directory
