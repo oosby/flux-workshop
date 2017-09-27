@@ -1,7 +1,7 @@
 # Flux Workshop
 
-## Step 5
-wire up store to an outside function.
+## Step 6
+add a component
 
 ## Run locally
 - clone/download repo and cd into the directory

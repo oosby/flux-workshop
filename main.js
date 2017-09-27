@@ -33,7 +33,6 @@
   */
   const actions = {
     getPosts() {
-      // debugger;
       dispatcher.dispatch({
         type: 'FETCH_POSTS_REQUEST'
       });
@@ -47,7 +46,6 @@
         return resp.json();
       })
       .then(function(json) {
-        // debugger;
         dispatcher.dispatch({
           type: 'FETCH_POSTS_SUCCESS',
           data: json,
@@ -123,18 +121,54 @@
       const token = `LISTENER_${listeners.length + 1}`;
       this._listeners[token] = listener;
     }
-
   }
 
   const store = new Store();
 
+  /**
+   * Components
+  */
+  class Posts {
+    constructor() {
+      // bind methods
+      this.render = this.render.bind(this);
+
+      store.subscribe(this.render);
+      this.elem = document.getElementById('posts-component');
+    }
+
+    renderPosts(posts) {
+      const frag = document.createDocumentFragment();
+      posts.forEach(function(post) {
+        const div = document.createElement('div');
+        const header = document.createElement('h2');
+        const body = document.createElement('p');
+        header.innerText = post.title;
+        body.innerText = post.body;
+        div.appendChild(header);
+        div.appendChild(body);
+        frag.appendChild(div);
+      });
+
+      return frag;
+    }
+
+    render() {
+      const state = store.getState();
+      if (state.fetchingPosts) {
+        this.elem.innerText = '... fetching posts';
+      }
+
+      if (!state.fetchingPosts && state.posts) {
+        this.elem.innerHTML = '';
+        this.elem.appendChild(this.renderPosts(state.posts));
+      }
+    }
+  }
 
   /**
    * Init App
   */
-    store.subscribe(function() {
-      const state = store.getState();
-      console.log('%ccomponent:', 'color:lime', state);
-    });
-    actions.getPosts();
+  new Posts();
+  actions.getPosts();
 }());
