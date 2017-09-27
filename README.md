@@ -1,7 +1,7 @@
 # Flux Workshop
 
-## Step 7
-add action, reducer and ui support for removing a post on click
+## Step 1
+No flux yet, just a simple async call to a third-party API
 
 ## Run locally
 - clone/download repo and cd into the directory
